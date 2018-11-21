@@ -1,4 +1,10 @@
 {
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "spec/**/*"
+  ],
   "compilerOptions": {
     "module": "commonjs",
     "moduleResolution": "node",
