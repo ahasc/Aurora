@@ -8,6 +8,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
+    "build": "./node_modules/.bin/rimraf lib/ && ./node_modules/.bin/gulp",
     "test": "./node_modules/.bin/mocha -r ts-node/register --require source-map-support/register ./spec/**/*.spec.ts",
     "coverage": "./node_modules/.bin/nyc yarn test"
   },
@@ -21,6 +22,7 @@
     "istanbul": "^0.4.5",
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
+    "rimraf": "^2.6.2",
     "sinon": "^7.1.1",
     "sinon-chai": "^3.2.0",
     "ts-node": "^7.0.1",
