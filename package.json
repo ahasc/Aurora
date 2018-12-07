@@ -8,7 +8,8 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build": "./node_modules/.bin/rimraf lib/ && ./node_modules/.bin/gulp",
+    "build": "yarn run package && yarn run coverage",
+    "package": "./node_modules/.bin/rimraf lib/ && ./node_modules/.bin/gulp default",
     "test": "./node_modules/.bin/mocha -r ts-node/register --require source-map-support/register ./spec/**/*.spec.ts",
     "coverage": "./node_modules/.bin/nyc yarn test"
   },
