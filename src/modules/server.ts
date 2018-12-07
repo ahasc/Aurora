@@ -1,45 +1,46 @@
-import { createServer as createHttpServer, Server as HttpServer, IncomingMessage, ServerResponse } from "http";
+import { createServer as createHttpServer, IncomingMessage, Server as HttpServer, ServerResponse } from "http";
 
-import { State } from '../enums'
+import { State } from "../enums";
 
 export class Server {
 
-  private _port: number
-  private _state: State
-  private _server: HttpServer
+  private port: number;
+  private state: State;
+  private server: HttpServer;
 
   constructor(opts: any) {
 
-    this._port = opts.port
+    this.port = opts.port;
   }
 
-  async start(): Promise<void> {
+  public async start(): Promise<void> {
 
     try {
-      if (!this._server)
-        this._server = createHttpServer()
+      if (!this.server) {
+        this.server = createHttpServer();
+      }
 
-      this._server.listen(this._port, () => {
-        this._state = State.LISTENNING
-        console.info(`Server is listenning  on port ${this._port}`)
-        this._server.on('request', (req: IncomingMessage, res: ServerResponse) => {
-          res.write("alive !")
-          res.end()
-        })
-      })
+      this.server.listen(this.port, () => {
+        this.state = State.LISTENNING;
+        console.info(`Server is listenning  on port ${this.port}`);
+        this.server.on("request", (req: IncomingMessage, res: ServerResponse) => {
+          res.write("alive !");
+          res.end();
+        });
+      });
     } catch (e) {
-      console.error(e)
+      console.error(e);
     }
   }
 
-  async stop() {
-    if (this._state != (State.FAILED | State.STOPPED)) {
+  public async stop() {
+    if (this.state !== State.FAILED && this.state !== State.STOPPED) {
       try {
-        this._server.close(() => {
-          console.info("Server shutdown")
-        })
+        this.server.close(() => {
+          console.info("Server shutdown");
+        });
       } catch (e) {
-        console.error(e)
+        console.error(e);
       }
     }
   }

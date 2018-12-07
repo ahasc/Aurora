@@ -1,5 +1,5 @@
-import { Server } from './modules'
+import { Server } from "./modules";
 
 export {
-  Server
-}
+  Server,
+};
