@@ -7,13 +7,15 @@ export class Server {
   private port: number;
   private state: State;
   private server: HttpServer;
+  private routes: Map<string, (req, res) => void>;
 
   constructor(opts: any) {
 
     this.port = opts.port;
+    this.routes = new Map();
   }
 
-  public async start(): Promise<void> {
+  public async start(): Promise<Server> {
 
     try {
       if (!this.server) {
@@ -22,15 +24,13 @@ export class Server {
 
       this.server.listen(this.port, () => {
         this.state = State.LISTENNING;
+        this.initializeRequestHandler();
         console.info(`Server is listenning  on port ${this.port}`);
-        this.server.on("request", (req: IncomingMessage, res: ServerResponse) => {
-          res.write("alive !");
-          res.end();
-        });
       });
     } catch (e) {
       console.error(e);
     }
+    return this;
   }
 
   public async stop() {
@@ -43,5 +43,17 @@ export class Server {
         console.error(e);
       }
     }
+  }
+
+  public route(path: string, cb: (req, res) => void): void {
+    this.routes.set(path, cb);
+  }
+
+  private initializeRequestHandler() {
+    this.server.on("request", (req: IncomingMessage, res: ServerResponse) => {
+      if (this.routes.has(req.url)) {
+        this.routes.get(req.url)(req, res);
+      }
+    });
   }
 }
