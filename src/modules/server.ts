@@ -7,7 +7,7 @@ export class Server {
   private port: number;
   private state: State;
   private server: HttpServer;
-  private routes: Map<string, (req, res) => void>;
+  private routes: Map<string, (req: IncomingMessage, res: ServerResponse) => void>;
 
   constructor(opts: any) {
 
@@ -45,8 +45,8 @@ export class Server {
     }
   }
 
-  public route(path: string, cb: (req, res) => void): void {
-    this.routes.set(path, cb);
+  public route(path: string, callback: (req: IncomingMessage, res: ServerResponse) => void): void {
+    this.routes.set(path, callback);
   }
 
   private initializeRequestHandler() {
