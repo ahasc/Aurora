@@ -1,6 +1,6 @@
 {
-  "name": "shine",
-  "version": "1.0.0",
+  "name": "shinets",
+  "version": "0.1.0",
   "description": "A modular NodeJS framework for shiny days",
   "main": "index.js",
   "repository": "git@github.com:ahasc/Aurora.git",
