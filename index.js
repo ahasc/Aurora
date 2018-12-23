@@ -1,1 +1,1 @@
-require('./lib/aurora.js');
+require('./lib/index.js');
