@@ -3,8 +3,8 @@
   "version": "0.1.1",
   "description": "A modular NodeJS framework for shiny days",
   "main": "index.js",
-  "repository": "git@github.com:ahasc/Aurora.git",
   "author": "ahasc",
+  "repository": "git@github.com:ahasc/Shine.git",
   "license": "MIT",
   "private": false,
   "scripts": {
