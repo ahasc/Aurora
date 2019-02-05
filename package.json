@@ -9,7 +9,7 @@
   "private": false,
   "scripts": {
     "build": "yarn run package && yarn run coverage",
-    "package": "./node_modules/.bin/rimraf lib/ && ./node_modules/.bin/gulp default",
+    "package": "./node_modules/.bin/rimraf build/ && ./node_modules/.bin/gulp default",
     "test": "./node_modules/.bin/mocha -r ts-node/register --require source-map-support/register ./spec/**/*.spec.ts",
     "coverage": "./node_modules/.bin/nyc yarn test"
   },
@@ -20,6 +20,7 @@
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-typescript": "^5.0.0-alpha.3",
+    "gulp-uglify": "^3.0.1",
     "istanbul": "^0.4.5",
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
