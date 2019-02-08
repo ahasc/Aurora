@@ -7,13 +7,17 @@ const OUT_DIR = "build/";
 
 gulp.task("default", ["compile-ts", "generate-dts"]);
 
+gulp.task('watch', ["default"], () => {
+  return gulp.watch("./src/**/*.ts", ["default"]);
+});
+
 gulp.task("compile-ts", () => {
   const tsProject = ts.createProject("tsconfig.json");
   return tsProject.src()
     .pipe(tsProject())
     .js
-    .pipe(concat("index.min.js"))
-    .pipe(minify())
+    //.pipe(concat("index.min.js"))
+    //.pipe(minify())
     .pipe(gulp.dest(OUT_DIR));
 });
 
