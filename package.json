@@ -20,6 +20,7 @@
     "chai": "^4.2.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
+    "gulp-sourcemaps": "^2.6.4",
     "gulp-typescript": "^5.0.0-alpha.3",
     "gulp-uglify": "^3.0.1",
     "istanbul": "^0.4.5",
