@@ -25,5 +25,6 @@
     ],
     "declaration": true,
     "declarationDir": "types",
+    "downlevelIteration": true,
   }
 }

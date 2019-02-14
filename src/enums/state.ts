@@ -3,7 +3,7 @@ enum State {
   STARTED,
   FAILED,
   LISTENNING,
-  STOPPED
+  STOPPED,
 }
 
-export default State
+export default State;

@@ -1,22 +1,30 @@
 import { createServer as createHttpServer, IncomingMessage, Server as HttpServer, ServerResponse } from "http";
 
 import { State } from "../enums";
+import { Tree } from "../utils/tree";
+import { Router } from "./router";
 
 export class Server {
 
   private port: number;
   private state: State;
   private server: HttpServer;
-  private routes: Map<string, (req: IncomingMessage, res: ServerResponse) => void>;
+  private routerTree: Tree<Router>;
 
   constructor(opts: any) {
 
     this.port = opts.port;
-    this.routes = new Map();
+    this.routerTree = Tree.createTree<Router>("Router");
+
+    const mainRouter = new Router()
+    mainRouter.route("", (req, res) => {
+      res.write("ShineTS Framework v" + require("../../package.json").version);
+      res.end();
+    });
+    this.routerTree.insert("", mainRouter);
   }
 
   public async start(): Promise<Server> {
-
     try {
       if (!this.server) {
         this.server = createHttpServer();
@@ -45,14 +53,25 @@ export class Server {
     }
   }
 
-  public route(path: string, callback: (req: IncomingMessage, res: ServerResponse) => void): void {
-    this.routes.set(path, callback);
+  /**
+   * Adds a route to the default router responding to '/' URL
+   * @param callback Callback to execute when URL matches
+   */
+  public route(callback: (req: IncomingMessage, res: ServerResponse) => void): Server {
+    this.routerTree.getNodeByUrl("/")[0].value.route("", callback);
+    return this;
+  }
+
+  public attach(identifier: string, router: Router): Server {
+    this.routerTree.insert(identifier, router, this.routerTree.getNodeByUrl("/").node.value);
+    return this;
   }
 
   private initializeRequestHandler() {
     this.server.on("request", (req: IncomingMessage, res: ServerResponse) => {
-      if (this.routes.has(req.url)) {
-        this.routes.get(req.url)(req, res);
+      const resolved = this.routerTree.getNodeByUrl(req.url);
+      if (resolved != null) {
+        resolved.node.value.process(req, res, resolved.remainingPath);
       }
     });
   }

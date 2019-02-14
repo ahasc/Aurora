@@ -1,1 +1,1 @@
-require('./lib/index.js');
+require('./build/index.js');
