@@ -13,7 +13,7 @@ export class Server {
 
   constructor(opts: any) {
 
-    this.port = opts.port;
+    this.port = opts.port || 8000;
     this.routerTree = Tree.createTree<Router>("Router");
 
     const mainRouter = new Router()
