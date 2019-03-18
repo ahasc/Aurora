@@ -114,21 +114,22 @@ export class Tree<V> {
    * @returns     Node instance with the requested value
    */
   private getNodeByValue(root: Node<V>, searchValue: any): Node<V> {
+    let resolved: Node<V> = null;
+
     while (root != null) {
       if (root.value === searchValue) {
-        return this.root;
+        resolved = this.root;
       } else if (root.childs.size > 0) {
         for (const child of root.childs.values()) {
           if (child.value === searchValue) {
-            return child;
+            resolved = child;
+            break;
           } else {
-            return this.getNodeByValue(child, searchValue);
+            resolved = this.getNodeByValue(child, searchValue);
           }
         }
-        return null;
-      } else {
-        return null;
       }
+      return resolved;
     }
   }
 }
