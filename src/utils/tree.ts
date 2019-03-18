@@ -6,6 +6,10 @@ export class Tree<V> {
   private static  trees: Map<string, Tree<any>> = new Map();
   private         root: Node<V>;
 
+  /**
+   * @description Constructor for Tree
+   * @returns     New Tree instance
+   */
   constructor() {
     this.root = null;
   }
@@ -25,11 +29,26 @@ export class Tree<V> {
    * @returns     Instance of tree
    */
   public static getTree(contentIdentifier: string): Tree<any> {
-    return Tree.trees.get(contentIdentifier);
+    return Tree.trees.get(contentIdentifier) || null;
   }
 
   /**
-   * @description Get an instance attached to a node of the tree by its full path
+   * @description   Remove given tree from registered trees
+   * @param         treeIdentifier Identifier of the Tree to remove
+   */
+  public static remove(treeIdentifier: string): void {
+    Tree.trees.delete(treeIdentifier); 
+  }
+
+  /**
+   * @description Remove all trees from registered trees
+   */
+  public static clear(): void {
+    Tree.trees.clear(); 
+  }
+
+  /**
+   * @description Get an instance of Node by its full path in Tree
    * @param       url Path of the searched instance 
    * @returns     Instance of found node, null either
    */
@@ -88,6 +107,12 @@ export class Tree<V> {
     }
   }
 
+  /**
+   * @description Get an instance of Node by it's value
+   * @param root 
+   * @param searchValue 
+   * @returns
+   */
   private getNodeByValue(root: Node<V>, searchValue: any): Node<V> {
     while (root != null) {
       if (root.value === searchValue) {

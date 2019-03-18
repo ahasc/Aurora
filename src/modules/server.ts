@@ -11,6 +11,11 @@ export class Server {
   private server: HttpServer;
   private routerTree: Tree<Router>;
 
+  /**
+   * @description Constructor for Server
+   * @param       opts Object containing all options for Server
+   * @returns     New Server instance
+   */
   constructor(opts: any) {
 
     this.port = opts.port || 8000;
@@ -24,6 +29,10 @@ export class Server {
     this.routerTree.insert("", mainRouter);
   }
 
+  /**
+   * @description Start the Server instance
+   * @returns     A promise with the server instance if fufilled
+   */
   public async start(): Promise<Server> {
     try {
       if (!this.server) {
@@ -41,6 +50,9 @@ export class Server {
     return this;
   }
 
+  /**
+   * @description Stops current Server instance
+   */
   public async stop() {
     if (this.state !== State.FAILED && this.state !== State.STOPPED) {
       try {
@@ -54,20 +66,30 @@ export class Server {
   }
 
   /**
-   * Adds a route to the default router responding to '/' URL
-   * @param callback Callback to execute when URL matches
+   * @description     Adds a route to the default router responding to '/' URL
+   * @param           callback  Callback to execute when URL matches
+   * @returns         The Server instance on which the route was created on
    */
   public route(callback: (req: IncomingMessage, res: ServerResponse) => void): Server {
     this.routerTree.getNodeByUrl("/")[0].value.route("", callback);
     return this;
   }
 
+  /**
+   * @description Attach a Router as Server's child
+   * @param       identifier URL part as prefix for the given Router
+   * @param       router The Router instance to attach to the Server
+   * @returns     The Server instance on which the Router was attached on
+   */
   public attach(identifier: string, router: Router): Server {
     this.routerTree.insert(identifier, router, this.routerTree.getNodeByUrl("/").node.value);
     return this;
   }
 
-  private initializeRequestHandler() {
+  /**
+   * @description Handles incoming requests and delegates it to the suitable Router
+   */
+  private initializeRequestHandler(): void {
     this.server.on("request", (req: IncomingMessage, res: ServerResponse) => {
       const resolved = this.routerTree.getNodeByUrl(req.url);
       if (resolved != null) {
