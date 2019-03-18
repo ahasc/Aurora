@@ -109,9 +109,9 @@ export class Tree<V> {
 
   /**
    * @description Get an instance of Node by it's value
-   * @param root 
-   * @param searchValue 
-   * @returns
+   * @param       root Root of the tree
+   * @param       searchValue Value of the wanted node
+   * @returns     Node instance with the requested value
    */
   private getNodeByValue(root: Node<V>, searchValue: any): Node<V> {
     while (root != null) {
