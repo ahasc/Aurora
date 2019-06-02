@@ -1,4 +1,4 @@
-# Shine
+# [ABANDONNED] Shine
 
 [![npm version](https://badge.fury.io/js/shinets.svg)](https://badge.fury.io/js/shinets)
 [![Build Status](https://travis-ci.org/ahasc/Shine.svg?branch=master)](https://travis-ci.org/ahasc/Shine)
